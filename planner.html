@@ -3,87 +3,39 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Unchaos Lab Planner - Pro Edition</title>
+  <title>Unchaos Lab Planner</title>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
   <style>
     :root {
-      --bg-main: #d8e6d3;
-      --accent-dark: #8daa81;
-      --card-bg: #eaf2e8;
-      --text-dark: #2c3e2e;
-      --text-muted: #5a735c;
-      --white: #ffffff;
-      --border-color: #c4d7c0;
-      --delete-color: #ff6b6b;
+      --bg-main: #d8e6d3; --accent-dark: #8daa81; --card-bg: #eaf2e8;
+      --text-dark: #2c3e2e; --text-muted: #5a735c; --white: #ffffff;
+      --border-color: #c4d7c0; --delete-color: #ff6b6b;
     }
-
     * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Inter', sans-serif; }
-
-    /* Custom Scrollbar */
     ::-webkit-scrollbar { width: 6px; height: 6px; }
     ::-webkit-scrollbar-track { background: transparent; }
     ::-webkit-scrollbar-thumb { background: #c4d7c0; border-radius: 10px; }
     ::-webkit-scrollbar-thumb:hover { background: var(--accent-dark); }
-
-    body {
-      background: linear-gradient(135deg, #121212 0%, #2a332a 100%);
-      display: flex; justify-content: center; align-items: center; 
-      height: 100vh; padding: 2vh 2vw; overflow: hidden;
-    }
-
-    /* Stretches to fill exactly 96% of the screen height and width */
-    .planner-container {
-      background-color: var(--bg-main); width: 100%; max-width: 1800px; height: 100%; 
-      padding: 20px; border-radius: 24px; display: flex; flex-direction: column; gap: 20px; 
-      box-shadow: 0 20px 50px rgba(0,0,0,0.5); overflow: hidden;
-    }
-
-    /* Top Section Grid */
+    body { background: linear-gradient(135deg, #121212 0%, #2a332a 100%); display: flex; justify-content: center; align-items: center; height: 100vh; padding: 2vh 2vw; overflow: hidden; }
+    .planner-container { background-color: var(--bg-main); width: 100%; max-width: 1800px; height: 100%; padding: 20px; border-radius: 24px; display: flex; flex-direction: column; gap: 20px; box-shadow: 0 20px 50px rgba(0,0,0,0.5); overflow: hidden; }
     .top-section { display: grid; grid-template-columns: 320px 1.5fr 1.2fr; gap: 20px; height: 35%; min-height: 250px; }
-    
     .controls-panel { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; height: 100%; }
-    
-    .card { 
-      background-color: var(--card-bg); border-radius: 16px; padding: 12px; display: flex; 
-      flex-direction: column; gap: 10px; box-shadow: 0 4px 15px rgba(0,0,0,0.03); 
-      transition: transform 0.2s ease, box-shadow 0.2s ease; 
-    }
+    .card { background-color: var(--card-bg); border-radius: 16px; padding: 12px; display: flex; flex-direction: column; gap: 10px; box-shadow: 0 4px 15px rgba(0,0,0,0.03); transition: transform 0.2s ease, box-shadow 0.2s ease; }
     .card:hover { transform: translateY(-2px); box-shadow: 0 8px 25px rgba(0,0,0,0.06); }
-    
-    .card-title {
-      background-color: var(--card-bg); border: 1px solid var(--border-color); border-radius: 10px; 
-      padding: 8px; font-size: 13px; font-weight: 600; color: var(--text-dark); text-align: center;
-    }
-    
-    .card-input {
-      background-color: var(--white); border-radius: 8px; padding: 8px; font-size: 12px; font-weight: 500;
-      color: var(--text-muted); text-align: center; border: 1px solid var(--border-color); outline: none; transition: 0.2s;
-    }
+    .card-title { background-color: var(--card-bg); border: 1px solid var(--border-color); border-radius: 10px; padding: 8px; font-size: 13px; font-weight: 600; color: var(--text-dark); text-align: center; }
+    .card-input { background-color: var(--white); border-radius: 8px; padding: 8px; font-size: 12px; font-weight: 500; color: var(--text-muted); text-align: center; border: 1px solid var(--border-color); outline: none; transition: 0.2s; }
     .card-input:focus, [contenteditable="true"]:focus { border-color: var(--accent-dark); background-color: #fffdf5; box-shadow: 0 0 0 3px rgba(141, 170, 129, 0.2); }
-
-    .btn-pill {
-      background-color: var(--accent-dark); color: var(--white); border: none; border-radius: 20px; 
-      padding: 10px; font-size: 14px; font-weight: 600; cursor: pointer; transition: 0.2s;
-    }
+    .btn-pill { background-color: var(--accent-dark); color: var(--white); border: none; border-radius: 20px; padding: 10px; font-size: 14px; font-weight: 600; cursor: pointer; transition: 0.2s; }
     .btn-pill:hover { background-color: #7a9870; transform: scale(1.02); }
-
-    .large-card { 
-      background-color: var(--card-bg); border-radius: 16px; display: flex; flex-direction: column; 
-      overflow: hidden; box-shadow: 0 4px 15px rgba(0,0,0,0.03); transition: transform 0.2s;
-    }
+    .large-card { background-color: var(--card-bg); border-radius: 16px; display: flex; flex-direction: column; overflow: hidden; box-shadow: 0 4px 15px rgba(0,0,0,0.03); transition: transform 0.2s; }
     .large-card:hover { transform: translateY(-2px); box-shadow: 0 8px 25px rgba(0,0,0,0.06); }
-    
     .header-bar { background-color: var(--accent-dark); color: var(--white); font-weight: 600; font-size: 15px; padding: 10px; text-align: center; letter-spacing: 0.5px;}
     .large-card-body { padding: 16px; flex: 1; display: flex; flex-direction: column; width: 100%; overflow: hidden; }
-
-    /* Overall Progress Chart */
     .chart-container { display: flex; align-items: flex-end; justify-content: space-around; width: 100%; height: 100%; padding: 10px 0; border-bottom: 2px solid var(--border-color); }
     .chart-col { display: flex; flex-direction: column; align-items: center; gap: 8px; height: 100%; justify-content: flex-end; width: 35px; }
     .chart-bar-bg { width: 28px; height: 100%; background-color: var(--bg-main); border-radius: 6px; display: flex; align-items: flex-end; }
     .chart-bar-fill { width: 100%; background-color: var(--accent-dark); border-radius: 6px; transition: height 0.6s cubic-bezier(0.4, 0, 0.2, 1); height: 0%; box-shadow: inset 0 -2px 5px rgba(0,0,0,0.1); }
     .chart-label { font-size: 12px; font-weight: 600; color: var(--text-muted); }
-
-    /* Habit Tracker Matrix */
     .habit-scroll-container { flex: 1; overflow-y: auto; padding-right: 5px; }
     .habit-table { width: 100%; border-collapse: separate; border-spacing: 0 6px; font-size: 11px; }
     .habit-table th { color: var(--text-dark); padding-bottom: 8px; font-weight: 600; }
@@ -91,50 +43,33 @@
     .habit-row { transition: 0.2s; border-radius: 6px; }
     .habit-row:hover { background-color: rgba(255,255,255,0.4); }
     .habit-name { text-align: left !important; width: 130px; outline: none; cursor: text; color: var(--text-dark); font-weight: 500; position: relative; }
-    
-    .habit-checkbox { 
-      appearance: none; width: 14px; height: 14px; border: 1.5px solid var(--accent-dark); border-radius: 3px; 
-      cursor: pointer; background: var(--white); transition: 0.2s; position: relative; display: inline-flex; justify-content: center; align-items: center;
-    }
+    .habit-checkbox { appearance: none; width: 14px; height: 14px; border: 1.5px solid var(--accent-dark); border-radius: 3px; cursor: pointer; background: var(--white); transition: 0.2s; position: relative; display: inline-flex; justify-content: center; align-items: center; }
     .habit-checkbox:checked { background: var(--accent-dark); }
     .habit-checkbox:checked::after { content: '✔'; color: white; font-size: 10px; position: absolute; }
     .habit-prog { font-weight: 700; color: var(--accent-dark); font-size: 12px; }
-
-    /* Days Section Grid */
     .days-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 15px; height: 65%; }
     .day-column { display: flex; flex-direction: column; gap: 10px; height: 100%; }
     .day-header { background-color: var(--accent-dark); color: var(--white); border-radius: 12px; padding: 10px; text-align: center; box-shadow: 0 4px 10px rgba(141,170,129,0.3); }
     .day-name { font-weight: 700; font-size: 14px; margin-bottom: 2px;}
     .day-date { font-size: 11px; opacity: 0.9; outline: none; }
-
     .gauge-card { background-color: var(--card-bg); border-radius: 12px; padding: 15px; display: flex; justify-content: center; align-items: center; box-shadow: 0 2px 10px rgba(0,0,0,0.02); }
     .gauge { width: 70px; height: 70px; border-radius: 50%; background: #c4d7c0; display: flex; justify-content: center; align-items: center; transition: background 0.5s cubic-bezier(0.4, 0, 0.2, 1); box-shadow: inset 0 2px 5px rgba(0,0,0,0.1); }
     .gauge-inner { width: 50px; height: 50px; background-color: var(--white); border-radius: 50%; display: flex; justify-content: center; align-items: center; font-weight: 700; font-size: 13px; color: var(--text-dark); box-shadow: 0 2px 5px rgba(0,0,0,0.05); }
-
     .tasks-container { background-color: var(--card-bg); border-radius: 12px; padding: 10px; flex: 1; display: flex; flex-direction: column; gap: 8px; overflow: hidden; box-shadow: 0 2px 10px rgba(0,0,0,0.02); }
     .tasks-header { background-color: var(--accent-dark); color: var(--white); font-size: 11px; font-weight: 700; text-align: center; padding: 5px; border-radius: 6px; letter-spacing: 0.5px; }
-    
     .task-list { list-style: none; display: flex; flex-direction: column; gap: 8px; overflow-y: auto; flex: 1; padding-right: 5px; }
     .task-item { display: flex; align-items: center; font-size: 11px; color: var(--text-dark); gap: 8px; font-weight: 500; background: rgba(255,255,255,0.4); padding: 6px; border-radius: 6px; transition: 0.2s; }
     .task-item:hover { background: rgba(255,255,255,0.8); }
-    
     .task-text { flex: 1; outline: none; cursor: text; transition: 0.2s; }
     .task-item.checked .task-text { text-decoration: line-through; color: #999; }
-    
-    .task-checkbox { 
-      appearance: none; width: 16px; height: 16px; border: 1.5px solid var(--accent-dark); border-radius: 4px; 
-      cursor: pointer; background: var(--white); transition: 0.2s; display: inline-flex; justify-content: center; align-items: center; flex-shrink: 0;
-    }
+    .task-checkbox { appearance: none; width: 16px; height: 16px; border: 1.5px solid var(--accent-dark); border-radius: 4px; cursor: pointer; background: var(--white); transition: 0.2s; display: inline-flex; justify-content: center; align-items: center; flex-shrink: 0; }
     .task-checkbox:checked { background: var(--accent-dark); }
     .task-checkbox:checked::after { content: '✔'; color: white; font-size: 12px; }
-
     .delete-btn { color: var(--delete-color); cursor: pointer; font-weight: bold; font-size: 15px; opacity: 0; border: none; background: none; transition: 0.2s; padding: 0 4px; }
     .task-item:hover .delete-btn, .habit-row:hover .delete-btn { opacity: 0.5; }
     .delete-btn:hover { opacity: 1 !important; transform: scale(1.2); }
-    
     .add-task-input { width: 100%; font-size: 11px; padding: 8px; border: 1.5px dashed var(--border-color); border-radius: 6px; background: rgba(255,255,255,0.5); outline: none; color: var(--text-muted); font-weight: 500; transition: 0.2s; }
     .add-task-input:focus { border-style: solid; border-color: var(--accent-dark); background: var(--white); }
-
     .day-footer { background-color: var(--card-bg); border-radius: 10px; padding: 10px; font-size: 11px; display: flex; flex-direction: column; gap: 6px; font-weight: 600; box-shadow: 0 2px 10px rgba(0,0,0,0.02); }
     .stat-row { display: flex; justify-content: space-between; align-items: center; color: var(--text-dark); }
     .progress-bar-mini { height: 6px; background-color: #c4d7c0; border-radius: 3px; overflow: hidden; }
@@ -144,28 +79,24 @@
 <body>
 
 <div class="planner-container">
-  
   <!-- Top Panel -->
   <div class="top-section">
     <div class="controls-panel">
-      <!-- Left Controls -->
       <div class="card">
         <div class="card-title">Start of the week 🚀</div>
-        <div class="card-input" contenteditable="true">22.12.2025</div>
-        <button class="btn-pill" onclick="alert('All changes are saved automatically in your browser memory! (Mock)')">Save 💾</button>
+        <div class="card-input" id="input-start" contenteditable="true" onblur="saveData()">22.12.2025</div>
+        <button class="btn-pill" onclick="alert('Progress auto-saved!')">Save 💾</button>
         <button class="btn-pill" onclick="clearPlanner()">Clear 🔄</button>
       </div>
-      <!-- Weekly Focus -->
       <div class="card">
         <div class="card-title">Weekly focus 🎯</div>
-        <div class="card-input" contenteditable="true">Friday's presentation</div>
+        <div class="card-input" id="input-focus" contenteditable="true" onblur="saveData()">Friday's presentation</div>
         <div class="card-title" style="background-color: var(--accent-dark); color: white;">Reward 🏆</div>
-        <div class="card-input" contenteditable="true">New hoodie</div>
+        <div class="card-input" id="input-reward" contenteditable="true" onblur="saveData()">New hoodie</div>
         <div class="card-title" style="background-color: var(--accent-dark); color: white;">Affirmation 💬</div>
-        <div class="card-input" contenteditable="true">One step at a time</div>
+        <div class="card-input" id="input-affirm" contenteditable="true" onblur="saveData()">One step at a time</div>
       </div>
     </div>
-
     <!-- Overall Progress -->
     <div class="large-card">
       <div class="header-bar">Overall Progress</div>
@@ -181,74 +112,111 @@
         </div>
       </div>
     </div>
-
     <!-- Habit Tracker -->
     <div class="large-card">
       <div class="header-bar">Habit tracker</div>
       <div class="large-card-body">
         <div class="habit-scroll-container">
           <table class="habit-table" id="habit-matrix">
-            <thead>
-              <tr>
-                <th style="text-align: left;">Habit</th><th>M</th><th>T</th><th>W</th><th>T</th><th>F</th><th>S</th><th>S</th><th>%</th>
-              </tr>
-            </thead>
-            <tbody id="habit-body">
-              <!-- Populated by JS -->
-            </tbody>
+            <thead><tr><th style="text-align: left;">Habit</th><th>M</th><th>T</th><th>W</th><th>T</th><th>F</th><th>S</th><th>S</th><th>%</th></tr></thead>
+            <tbody id="habit-body"></tbody>
           </table>
           <input type="text" class="add-task-input" style="margin-top: 8px;" placeholder="+ Add new habit (Press Enter)" onkeydown="handleAddHabit(event)">
         </div>
       </div>
     </div>
   </div>
-
   <!-- Days Grid -->
-  <div class="days-grid" id="days-container">
-    <!-- Populated by JS -->
-  </div>
-
+  <div class="days-grid" id="days-container"></div>
 </div>
 
 <script>
-  // --- STATE ---
-  const days = [
-    { id: 'mon', name: 'Monday', date: '22.12.2025', tasks: ['Check email', 'Grocery shopping', 'Budget planning'] },
-    { id: 'tue', name: 'Tuesday', date: '23.12.2025', tasks: ['Clean kitchen', 'Vacuum house', 'Therapy session'] },
-    { id: 'wed', name: 'Wednesday', date: '24.12.2025', tasks: ['Gym workout', 'Laundry', 'Research flights'] },
-    { id: 'thu', name: 'Thursday', date: '25.12.2025', tasks: ['Meal prep', 'Study for exam', 'Bake a cake'] },
-    { id: 'fri', name: 'Friday', date: '26.12.2025', tasks: ['Yoga session', 'Coffee meeting', 'Post video'] },
-    { id: 'sat', name: 'Saturday', date: '27.12.2025', tasks: ['Meet friends', 'Pay bills', 'Relax'] },
-    { id: 'sun', name: 'Sunday', date: '28.12.2025', tasks: ['Learn SEO', 'Bike trip', 'Plan next week'] }
+  let defaultDays = [
+    { id: 'mon', name: 'Monday', date: '22.12.2025', tasks: [{t: 'Check email', c: false}, {t: 'Grocery shopping', c: false}] },
+    { id: 'tue', name: 'Tuesday', date: '23.12.2025', tasks: [{t: 'Clean kitchen', c: false}, {t: 'Vacuum house', c: false}] },
+    { id: 'wed', name: 'Wednesday', date: '24.12.2025', tasks: [{t: 'Gym workout', c: false}, {t: 'Laundry', c: false}] },
+    { id: 'thu', name: 'Thursday', date: '25.12.2025', tasks: [{t: 'Meal prep', c: false}, {t: 'Study for exam', c: false}] },
+    { id: 'fri', name: 'Friday', date: '26.12.2025', tasks: [{t: 'Yoga session', c: false}, {t: 'Post video', c: false}] },
+    { id: 'sat', name: 'Saturday', date: '27.12.2025', tasks: [{t: 'Meet friends', c: false}, {t: 'Pay bills', c: false}] },
+    { id: 'sun', name: 'Sunday', date: '28.12.2025', tasks: [{t: 'Learn SEO', c: false}, {t: 'Bike trip', c: false}] }
+  ];
+  let defaultHabits = [
+    { n: 'Wake up at 6:30', c: [false,false,false,false,false,false,false] },
+    { n: 'Drink 2L water', c: [false,false,false,false,false,false,false] },
+    { n: 'Gym', c: [false,false,false,false,false,false,false] }
   ];
 
-  let habits = ['Wake up at 6:30', 'Drink 2L water', 'Cold shower', 'Gym', 'Reading 10 pages', 'Meditation'];
+  let days = [];
+  let habits = [];
 
-  // --- INITIALIZATION ---
-  function init() {
-    renderDays();
-    renderHabits();
-    updateAllProgress();
+  function init() { loadData(); renderDays(); renderHabits(); updateAllProgress(); }
+
+  function loadData() {
+    const saved = localStorage.getItem('unchaosData');
+    if (saved) {
+      const parsed = JSON.parse(saved);
+      document.getElementById('input-start').innerText = parsed.t[0] || '';
+      document.getElementById('input-focus').innerText = parsed.t[1] || '';
+      document.getElementById('input-reward').innerText = parsed.t[2] || '';
+      document.getElementById('input-affirm').innerText = parsed.t[3] || '';
+      days = parsed.d || defaultDays;
+      habits = parsed.h || defaultHabits;
+    } else {
+      days = defaultDays; habits = defaultHabits;
+    }
   }
 
-  // --- RENDER DAYS ---
+  function saveData() {
+    const t = [
+      document.getElementById('input-start').innerText,
+      document.getElementById('input-focus').innerText,
+      document.getElementById('input-reward').innerText,
+      document.getElementById('input-affirm').innerText
+    ];
+    
+    // Scrape Days
+    const d = [];
+    document.querySelectorAll('.day-column').forEach(col => {
+      const id = col.getAttribute('data-day');
+      const name = col.querySelector('.day-name').innerText;
+      const date = col.querySelector('.day-date').innerText;
+      const tasks = [];
+      col.querySelectorAll('.task-item').forEach(item => {
+         tasks.push({ t: item.querySelector('.task-text').innerText, c: item.querySelector('.task-checkbox').checked });
+      });
+      d.push({ id, name, date, tasks });
+    });
+
+    // Scrape Habits
+    const h = [];
+    document.querySelectorAll('.habit-row').forEach(row => {
+      const name = row.querySelector('.habit-name span').innerText;
+      const checks = Array.from(row.querySelectorAll('.habit-checkbox')).map(cb => cb.checked);
+      h.push({ n: name, c: checks });
+    });
+
+    localStorage.setItem('unchaosData', JSON.stringify({t, d, h}));
+  }
+
   function renderDays() {
-    const container = document.getElementById('days-container');
-    container.innerHTML = days.map(day => `
+    document.getElementById('days-container').innerHTML = days.map(day => `
       <div class="day-column" id="col-${day.id}" data-day="${day.id}">
         <div class="day-header">
-          <div class="day-name" contenteditable="true">${day.name}</div>
-          <div class="day-date" contenteditable="true">${day.date}</div>
+          <div class="day-name" contenteditable="true" onblur="saveData()">${day.name}</div>
+          <div class="day-date" contenteditable="true" onblur="saveData()">${day.date}</div>
         </div>
         <div class="gauge-card">
-          <div class="gauge" id="gauge-${day.id}">
-            <div class="gauge-inner" id="gauge-text-${day.id}">0%</div>
-          </div>
+          <div class="gauge" id="gauge-${day.id}"><div class="gauge-inner" id="gauge-text-${day.id}">0%</div></div>
         </div>
         <div class="tasks-container">
           <div class="tasks-header">Tasks</div>
           <ul class="task-list" id="list-${day.id}">
-            ${day.tasks.map(task => createTaskHTML(task)).join('')}
+            ${day.tasks.map(task => `
+              <li class="task-item ${task.c ? 'checked' : ''}">
+                <button class="delete-btn" onclick="deleteTask(this)">×</button>
+                <span class="task-text" contenteditable="true" onblur="saveData()">${task.t}</span>
+                <input type="checkbox" class="task-checkbox" ${task.c ? 'checked' : ''} onchange="toggleTask(this)">
+              </li>`).join('')}
           </ul>
           <input type="text" class="add-task-input" placeholder="+ Add task (Enter)" onkeydown="handleAddTask(event, '${day.id}')">
         </div>
@@ -261,145 +229,102 @@
     `).join('');
   }
 
-  function createTaskHTML(text) {
-    return `
-      <li class="task-item">
-        <button class="delete-btn" onclick="deleteTask(this, event)">×</button>
-        <span class="task-text" contenteditable="true">${text}</span>
-        <input type="checkbox" class="task-checkbox" onchange="toggleTask(this)">
-      </li>
-    `;
-  }
-
-  // --- RENDER HABITS ---
   function renderHabits() {
-    const tbody = document.getElementById('habit-body');
-    tbody.innerHTML = habits.map((habit, i) => `
+    document.getElementById('habit-body').innerHTML = habits.map((habit, i) => `
       <tr class="habit-row" id="habit-row-${i}">
         <td class="habit-name">
           <button class="delete-btn" style="position:absolute; left:-18px; top:2px;" onclick="deleteHabit(${i})">×</button>
-          <span contenteditable="true">${habit}</span>
+          <span contenteditable="true" onblur="saveData()">${habit.n}</span>
         </td>
-        <td><input type="checkbox" class="habit-checkbox" onchange="updateHabitProgress(${i})"></td>
-        <td><input type="checkbox" class="habit-checkbox" onchange="updateHabitProgress(${i})"></td>
-        <td><input type="checkbox" class="habit-checkbox" onchange="updateHabitProgress(${i})"></td>
-        <td><input type="checkbox" class="habit-checkbox" onchange="updateHabitProgress(${i})"></td>
-        <td><input type="checkbox" class="habit-checkbox" onchange="updateHabitProgress(${i})"></td>
-        <td><input type="checkbox" class="habit-checkbox" onchange="updateHabitProgress(${i})"></td>
-        <td><input type="checkbox" class="habit-checkbox" onchange="updateHabitProgress(${i})"></td>
+        ${habit.c.map((check, j) => `<td><input type="checkbox" class="habit-checkbox" ${check ? 'checked' : ''} onchange="updateHabitProgress(${i})"></td>`).join('')}
         <td class="habit-prog" id="habit-val-${i}">0%</td>
       </tr>
     `).join('');
+    habits.forEach((_, i) => updateHabitProgress(i, false));
   }
 
-  // --- INTERACTIONS ---
   function handleAddTask(event, dayId) {
     if (event.key === 'Enter' && event.target.value.trim() !== '') {
       const list = document.getElementById(`list-${dayId}`);
-      list.insertAdjacentHTML('beforeend', createTaskHTML(event.target.value.trim()));
+      list.insertAdjacentHTML('beforeend', `<li class="task-item"><button class="delete-btn" onclick="deleteTask(this)">×</button><span class="task-text" contenteditable="true" onblur="saveData()">${event.target.value.trim()}</span><input type="checkbox" class="task-checkbox" onchange="toggleTask(this)"></li>`);
       event.target.value = '';
-      
-      // Auto scroll to bottom
       list.scrollTop = list.scrollHeight;
       updateDayProgress(dayId);
+      saveData();
     }
   }
 
   function handleAddHabit(event) {
     if (event.key === 'Enter' && event.target.value.trim() !== '') {
-      habits.push(event.target.value.trim());
+      habits.push({ n: event.target.value.trim(), c: [false,false,false,false,false,false,false] });
       renderHabits();
       event.target.value = '';
-      
-      // Auto scroll container
       const container = document.querySelector('.habit-scroll-container');
       container.scrollTop = container.scrollHeight;
+      saveData();
     }
   }
 
-  function deleteTask(btn, event) {
+  function deleteTask(btn) {
     const item = btn.closest('.task-item');
-    const dayCol = item.closest('.day-column');
-    const dayId = dayCol.getAttribute('data-day');
-    item.style.transform = "scale(0.9)";
-    item.style.opacity = "0";
-    setTimeout(() => {
-      item.remove();
-      updateDayProgress(dayId);
-    }, 200);
+    const dayId = item.closest('.day-column').getAttribute('data-day');
+    item.remove();
+    updateDayProgress(dayId);
+    saveData();
   }
 
   function deleteHabit(index) {
     habits.splice(index, 1);
     renderHabits();
+    saveData();
   }
 
   function toggleTask(checkbox) {
     const item = checkbox.closest('.task-item');
-    if (checkbox.checked) {
-      item.classList.add('checked');
-    } else {
-      item.classList.remove('checked');
-    }
-    const dayId = item.closest('.day-column').getAttribute('data-day');
-    updateDayProgress(dayId);
+    checkbox.checked ? item.classList.add('checked') : item.classList.remove('checked');
+    updateDayProgress(item.closest('.day-column').getAttribute('data-day'));
+    saveData();
   }
 
-  // --- PROGRESS CALCULATIONS ---
-  function updateAllProgress() {
-    days.forEach(day => updateDayProgress(day.id));
-  }
+  function updateAllProgress() { days.forEach(day => updateDayProgress(day.id)); }
 
   function updateDayProgress(dayId) {
     const col = document.getElementById(`col-${dayId}`);
+    if (!col) return;
     const checkboxes = col.querySelectorAll('.task-checkbox');
     const total = checkboxes.length;
     const checked = col.querySelectorAll('.task-checkbox:checked').length;
-    
     const percent = total === 0 ? 0 : Math.round((checked / total) * 100);
-    const left = total - checked;
-
-    // Update numbers
-    document.getElementById(`done-${dayId}`).innerText = checked;
-    document.getElementById(`left-${dayId}`).innerText = left;
     
-    // Update Gauge
-    const gauge = document.getElementById(`gauge-${dayId}`);
-    gauge.style.background = `conic-gradient(var(--accent-dark) 0% ${percent}%, #c4d7c0 ${percent}% 100%)`;
+    document.getElementById(`done-${dayId}`).innerText = checked;
+    document.getElementById(`left-${dayId}`).innerText = total - checked;
+    document.getElementById(`gauge-${dayId}`).style.background = `conic-gradient(var(--accent-dark) 0% ${percent}%, #c4d7c0 ${percent}% 100%)`;
     document.getElementById(`gauge-text-${dayId}`).innerText = `${percent}%`;
-
-    // Update mini bar
     document.getElementById(`mini-bar-${dayId}`).style.width = `${percent}%`;
-
-    // Update Overall Chart Bar (Cap it visually so it doesn't overflow)
-    const barHeight = percent > 0 ? Math.max(percent, 5) : 0; // Minimum 5% height if greater than 0 so it's visible
-    document.getElementById(`bar-${dayId}`).style.height = `${barHeight}%`;
+    document.getElementById(`bar-${dayId}`).style.height = `${percent > 0 ? Math.max(percent, 5) : 0}%`;
   }
 
-  function updateHabitProgress(rowIndex) {
+  function updateHabitProgress(rowIndex, triggerSave = true) {
     const row = document.getElementById(`habit-row-${rowIndex}`);
     if(!row) return;
     const checked = row.querySelectorAll('.habit-checkbox:checked').length;
-    const percent = Math.round((checked / 7) * 100);
-    document.getElementById(`habit-val-${rowIndex}`).innerText = `${percent}%`;
+    document.getElementById(`habit-val-${rowIndex}`).innerText = `${Math.round((checked / 7) * 100)}%`;
+    if(triggerSave) saveData();
   }
 
   function clearPlanner() {
-    if(confirm("Are you sure you want to uncheck all tasks and habits?")) {
+    if(confirm("Uncheck all tasks and habits to start fresh?")) {
       document.querySelectorAll('input[type="checkbox"]').forEach(cb => {
         cb.checked = false;
-        if(cb.classList.contains('task-checkbox')) {
-          cb.closest('.task-item').classList.remove('checked');
-        }
+        if(cb.classList.contains('task-checkbox')) cb.closest('.task-item').classList.remove('checked');
       });
       updateAllProgress();
-      habits.forEach((h, i) => updateHabitProgress(i));
+      habits.forEach((_, i) => updateHabitProgress(i, false));
+      saveData();
     }
   }
 
-  // Run on load
   window.onload = init;
 </script>
-
 </body>
 </html>
